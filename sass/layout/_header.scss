@@ -1,0 +1,80 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.header {
+    display: flex;
+    flex-direction: column; // Móvil: Logo arriba, iconos abajo
+    align-items: center;    // Centrado horizontalmente
+    gap: 20px;              // Espacio entre logo e iconos
+    padding: 20px;        // Un poco de aire arriba y abajo
+    z-index: 10;
+    position: relative;
+
+    // Tablet y Desktop: Todo en una sola línea
+    @include m.respond-to('tablet') {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 30px; // Más aire en pantallas grandes
+    }
+
+    &__logo {
+        font-size: 24px; // 24px en móvil
+        font-weight: 700;
+        letter-spacing: -0.33px;
+        color: v.$color-white;
+        
+        @include m.respond-to('tablet') {
+            font-size: 32px; // 32px en tablet/desktop
+        }
+    }
+
+    &__socials {
+        display: flex;     // ¡Esto pone los iconos en fila!
+        gap: 25px;         // Espacio entre cada icono (Github - Linkedin...)
+        align-items: center;
+        
+        // Ajuste para que los iconos (SVG) tengan el tamaño correcto
+        a {
+            display: inline-block;
+            line-height: 0; // Evita espacios extra debajo del SVG
+            
+            svg, img {
+                width: 20px;
+                height: 20px;
+                fill: v.$color-white; // Si son SVG inline
+                transition: fill 0.3s ease;
+            }
+
+            &:hover {
+                svg, img {
+                    fill: v.$color-green; // Efecto hover verde
+                    // Si usas <img> en lugar de <svg> inline, usa filter o cambia la img
+                    filter: brightness(0.8) sepia(1) hue-rotate(70deg) saturate(5); 
+                }
+            }
+        }
+        
+        // Ajuste específico para posicionar a la derecha en tablet/desktop
+        @include m.respond-to('tablet') {
+            margin-right: 30px; 
+            // En el diseño original, el margen derecho en header es 30px aprox
+            // para alinearse con el grid, pero justify-content: space-between ya ayuda.
+            margin-right: 0; 
+        }
+    }
+}
+
+// Reutilizamos la clase header para el footer, pero con ajustes extra si hace falta
+.header--footer {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: v.$color-dark-grey; // El footer suele tener un fondo grisáceo en este diseño
+    margin-top: 0;
+    width: 100%;     // Asegurar ancho completo
+    max-width: 100%; // Romper el contenedor si es necesario para el fondo
+    
+    // NOTA: Para que el fondo gris ocupe todo el ancho, 
+    // el footer en HTML debe estructurarse así:
+    // <footer class="footer"> ...contenido... </footer>
+    // Y el estilo del fondo ir en .footer, no en .header--footer
+}

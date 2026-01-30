@@ -1,0 +1,98 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.skills {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    position: relative;
+    border-top: 1px solid v.$color-light-grey;
+    // z-index: 1 para estar sobre el fondo, pero los anillos irán en -1 o 0
+    z-index: 1; 
+
+    // --- CORRECCIÓN: ANILLOS COMO ELEMENTO FLOTANTE (NO background-image) ---
+    &::before {
+        content: '';
+        position: absolute;
+        width: 530px; 
+        height: 129px;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        
+        // Z-Index bajo para quedar detrás del texto
+        z-index: -1; 
+        
+        // Imagen Original (Móvil/Tablet)
+        background-image: url('../img/pattern-rings2.svg');
+
+        // POSICIÓN MÓVIL
+        right: -350px;
+        bottom: -65px;
+
+        @include m.respond-to('tablet') {
+            // POSICIÓN TABLET
+            right: -345px; 
+            bottom: -30px;
+        }
+
+        @include m.respond-to('desktop') {
+            // CAMBIO DE IMAGEN SOLO EN DESKTOP
+            background-image: url('../img/pattern-rings4.svg');
+            
+            // POSICIÓN DESKTOP
+            // Ajusta 'left' y 'bottom' según tu diseño
+            bottom: -30px;
+            right: -400px; // Reseteamos right porque ahora usamos left
+        }
+    }
+
+    // --- (El resto sigue igual) ---
+    @include m.respond-to('tablet') {
+        margin-bottom: 100px;
+        border-top: none;
+    }
+
+    @include m.respond-to('desktop') {
+        margin-bottom: 140px; 
+        padding-top: 72px; 
+    }
+
+    &__list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        text-align: center;
+        list-style: none;
+        padding: 0;
+        margin: 0; 
+
+        @include m.respond-to('tablet') {
+            grid-template-columns: repeat(2, 1fr);
+            text-align: left;
+            gap: 52px 24px;
+            padding-top: 20px;
+        }
+
+        @include m.respond-to('desktop') {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 58px 30px;
+        }
+    }
+
+    &__title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 1px;
+        @include m.respond-to('desktop') { font-size: 48px; }
+    }
+
+    &__experience {
+        font-size: 16px;
+        color: v.$color-light-grey;
+        font-weight: 500;
+        @include m.respond-to('desktop') { font-size: 18px; }
+    }
+}
+
+.skills + .separator {
+    @include m.respond-to('tablet') { display: none; }
+}

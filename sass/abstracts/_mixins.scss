@@ -1,0 +1,19 @@
+@use 'sass:map'; // Importante: importar el módulo de mapas de SASS
+
+$breakpoints: (
+    'tablet': 768px,
+    'desktop': 1024px,
+    'large': 1440px
+);
+
+@mixin respond-to($breakpoint) {
+    // Usamos map.has-key en lugar de map-has-key
+    @if map.has-key($breakpoints, $breakpoint) {
+        // Usamos map.get en lugar de map-get
+        @media (min-width: map.get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    } @else {
+        @warn "Desconocido breakpoint: #{$breakpoint}.";
+    }
+}

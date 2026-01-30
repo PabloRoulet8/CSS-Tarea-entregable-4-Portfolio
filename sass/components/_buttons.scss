@@ -1,0 +1,37 @@
+@use '../abstracts/variables' as v;
+
+// Botón principal (Contact Me)
+.btn-primary {
+    display: inline-block;
+    font-family: v.$font-primary;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2.29px;
+    text-transform: uppercase;
+    color: v.$color-white;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid v.$color-green; // Línea base
+    padding-bottom: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: v.$color-green;
+    }
+}
+
+// Botón de texto (View Project / View Code)
+.btn-text {
+    @extend .btn-primary; // Hereda todo lo de arriba
+    
+    // Forzamos explícitamente el borde por si algo lo sobrescribe
+    border-bottom: 2px solid v.$color-green; 
+    padding-bottom: 10px;
+    
+    &:hover {
+        color: v.$color-white; // El texto se pone blanco al pasar el mouse (opcional, según diseño)
+        // O si prefieres que siga verde:
+        // color: v.$color-green; 
+    }
+}

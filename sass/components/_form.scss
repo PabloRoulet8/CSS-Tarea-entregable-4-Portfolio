@@ -1,0 +1,51 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.contact-form {
+    margin-top: 50px;
+    width: 100%;
+    max-width: 445px;
+    margin-bottom: 87px;
+    position: relative; 
+
+    // --- ¡LIMPIEZA! ---
+    // Hemos borrado el &::before de aquí porque los anillos
+    // ahora los controlaremos desde el footer (su lugar correcto).
+
+    // --- RESTO DEL FORMULARIO ---
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 32px;
+        width: 100%; 
+    }
+
+    input,
+    textarea {
+        width: 100%; 
+        display: block;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid v.$color-white;
+        padding: 0 0 16px 24px; 
+        font-family: v.$font-primary;
+        font-weight: 500;
+        font-size: 16px;
+        color: v.$color-white;
+        outline: none;
+        border-radius: 0;
+
+        &:focus {
+            border-bottom-color: v.$color-green;
+        }
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end; 
+        width: 100%;
+    }
+}

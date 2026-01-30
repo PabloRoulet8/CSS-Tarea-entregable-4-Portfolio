@@ -1,0 +1,123 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.footer {
+    background-color: v.$color-dark-grey;
+    padding-top: 60px;
+    margin-top: 80px;
+    
+    
+    // Configuración Full Width (Fondo infinito)
+    width: 100vw; 
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    // --- CORRECCIÓN 1: SIN TIJERAS ---
+    // Quitamos overflow: hidden para que los anillos NO se corten
+    // z-index: 1 para que el fondo gris tape lo que haya detrás si es necesario
+    z-index: 1;
+
+    // --- ANILLOS DEL FOOTER ---
+    &::before {
+        content: '';
+        position: absolute;
+        width: 530px;
+        height: 129px;
+        
+        background-image: url('../img/pattern-rings.svg'); // ORIGINAL (Móvil/Tablet)
+        
+        background-repeat: no-repeat;
+        pointer-events: none; 
+        z-index: 0; // Detrás del contenido
+        
+        // Posición MÓVIL
+        bottom: 250px; 
+        left: -100px; 
+
+        @include m.respond-to('tablet') {
+            // TUS VALORES DE TABLET
+            bottom: 150px; 
+            left: -60px; 
+        }
+
+        @include m.respond-to('desktop') {
+             // CAMBIO DE IMAGEN SOLO EN DESKTOP
+             background-image: url('../img/pattern-rings3.svg'); // NUEVA
+             
+             // TUS VALORES DE DESKTOP
+             bottom: 150px;
+             left: -130px;
+        }
+    }
+
+    &__layout {
+        position: relative;
+        z-index: 2; // El contenido (texto/form) va encima de los anillos
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+        margin-bottom: 0px; 
+
+        @include m.respond-to('tablet') {
+            flex-direction: column; 
+            align-items: center;
+            text-align: center;
+            max-width: 445px; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @include m.respond-to('desktop') {
+            flex-direction: row; 
+            justify-content: space-between;
+            align-items: flex-start;
+            text-align: left;
+            
+            // --- CORRECCIÓN 2: ALINEACIÓN ---
+            // Antes tenías 100%, lo que rompía la grilla de 1110px.
+            // Ahora forzamos el ancho del contenedor global.
+            max-width: 1110px; 
+            width: 100%; // Ocupar todo el espacio disponible hasta 1110px
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    &__text {
+        max-width: 445px;
+        margin-bottom: 50px; 
+        width: 100%;
+
+        @include m.respond-to('desktop') {
+            margin-bottom: 0; 
+        }
+
+        // --- TIPOGRAFÍA CORREGIDA ---
+        .section-title {
+            font-size: 40px; // Móvil default
+            font-weight: 700;
+            margin-bottom: 20px;
+
+            @include m.respond-to('tablet') {
+                font-size: 72px; // Tablet
+            }
+            @include m.respond-to('desktop') {
+                font-size: 88px; // Desktop
+            }
+        }
+
+        p {
+            font-size: 16px; // Móvil default
+            line-height: 26px;
+            color: v.$color-light-grey;
+
+            @include m.respond-to('tablet') {
+                font-size: 18px; // Tablet y Desktop
+            }
+        }
+    }
+}

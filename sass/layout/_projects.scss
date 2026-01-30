@@ -1,0 +1,121 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.projects {
+    padding-bottom: 80px;
+    
+    // Separación extra en móvil
+    margin-top: 80px; 
+
+    @include m.respond-to('tablet') {
+        margin-top: 0; 
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            @include m.respond-to('tablet') { font-size: 72px; }
+            @include m.respond-to('desktop') { font-size: 88px; }
+        }
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr; 
+        gap: 40px;
+
+        @include m.respond-to('tablet') {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px 24px;
+        }
+        
+        @include m.respond-to('desktop') {
+            gap: 70px 30px;
+        }
+    }
+}
+
+.project-card {
+    &__image-wrapper {
+        position: relative;
+        margin-bottom: 20px;
+        cursor: pointer; // Indica que es interactivo
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        // --- OVERLAY (La capa oscura con botones) ---
+        .project-card__overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75); // Fondo oscuro semitransparente
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            
+            // Estado inicial: Invisible
+            opacity: 0; 
+            transition: opacity 0.3s ease-in-out;
+            
+            // En dispositivos sin hover (celulares), aseguramos que no moleste
+            @media (hover: none) {
+                 display: none;
+            }
+        }
+
+        // --- LA REGLA MÁGICA DEL HOVER (Solo Desktop) ---
+        // Cuando el mouse entra en el WRAPPER, hacemos visible el OVERLAY
+        @include m.respond-to('desktop') {
+            &:hover {
+                .project-card__overlay {
+                    opacity: 1; // ¡Aparece!
+                }
+            }
+        }
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 7px;
+        text-transform: uppercase;
+    }
+
+    &__tags {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        
+        span {
+            font-size: 18px;
+            font-weight: 500;
+            color: v.$color-light-grey;
+            text-transform: uppercase;
+        }
+    }
+
+    // --- BOTONES VERSIÓN MÓVIL/TABLET (Debajo de la imagen) ---
+    &__actions-mobile {
+        display: flex;
+        gap: 30px;
+
+        // En desktop los ocultamos porque usamos los del overlay
+        @include m.respond-to('desktop') {
+            display: none;
+        }
+    }
+}
