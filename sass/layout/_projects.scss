@@ -1,16 +1,16 @@
+// sass/components/_projects.scss
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
 .projects {
     padding-bottom: 80px;
-    
-    // Separación extra en móvil
-    margin-top: 80px; 
+    margin-top: 80px; // Separación en móvil
 
     @include m.respond-to('tablet') {
         margin-top: 0; 
     }
 
+    // ENCABEZADO (Título "Projects" y botón Contact)
     &__header {
         display: flex;
         justify-content: space-between;
@@ -20,16 +20,19 @@
         .section-title {
             font-size: 40px;
             font-weight: 700;
+            // Escala del título según dispositivo
             @include m.respond-to('tablet') { font-size: 72px; }
             @include m.respond-to('desktop') { font-size: 88px; }
         }
     }
 
+    // GRILLA DE TARJETAS
     &__grid {
         display: grid;
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr; // Móvil: 1 columna
         gap: 40px;
 
+        // Tablet: 2 columnas
         @include m.respond-to('tablet') {
             grid-template-columns: repeat(2, 1fr);
             gap: 60px 24px;
@@ -41,11 +44,14 @@
     }
 }
 
+// --- TARJETA DE PROYECTO INDIVIDUAL ---
 .project-card {
+    
+    // Contenedor de la imagen (donde ocurre la magia del hover)
     &__image-wrapper {
         position: relative;
         margin-bottom: 20px;
-        cursor: pointer; // Indica que es interactivo
+        cursor: pointer; 
 
         img {
             width: 100%;
@@ -53,14 +59,15 @@
             display: block;
         }
 
-        // --- OVERLAY (La capa oscura con botones) ---
+        // --- OVERLAY (Capa oscura sobre la imagen) ---
+        // Contiene los botones "View Project" y "View Code"
         .project-card__overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.75); // Fondo oscuro semitransparente
+            background-color: rgba(0, 0, 0, 0.75); // Negro al 75%
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -71,23 +78,25 @@
             opacity: 0; 
             transition: opacity 0.3s ease-in-out;
             
-            // En dispositivos sin hover (celulares), aseguramos que no moleste
+            // IMPORTANTE: En móviles (pantallas táctiles sin hover), 
+            // ocultamos esto totalmente para evitar problemas.
             @media (hover: none) {
                  display: none;
             }
         }
 
-        // --- LA REGLA MÁGICA DEL HOVER (Solo Desktop) ---
-        // Cuando el mouse entra en el WRAPPER, hacemos visible el OVERLAY
+        // --- INTERACCIÓN DESKTOP ---
+        // Al pasar el mouse sobre la imagen, aparece el overlay.
         @include m.respond-to('desktop') {
             &:hover {
                 .project-card__overlay {
-                    opacity: 1; // ¡Aparece!
+                    opacity: 1; 
                 }
             }
         }
     }
 
+    // Título del proyecto
     &__title {
         font-size: 24px;
         font-weight: 700;
@@ -95,6 +104,7 @@
         text-transform: uppercase;
     }
 
+    // Etiquetas (HTML, CSS, JS)
     &__tags {
         display: flex;
         gap: 12px;
@@ -108,12 +118,13 @@
         }
     }
 
-    // --- BOTONES VERSIÓN MÓVIL/TABLET (Debajo de la imagen) ---
+    // --- BOTONES PARA MÓVIL/TABLET ---
+    // Se muestran debajo de la tarjeta porque no hay efecto hover táctil.
     &__actions-mobile {
         display: flex;
         gap: 30px;
 
-        // En desktop los ocultamos porque usamos los del overlay
+        // En desktop los ocultamos porque ya están dentro del overlay
         @include m.respond-to('desktop') {
             display: none;
         }

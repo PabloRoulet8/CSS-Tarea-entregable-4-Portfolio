@@ -1,6 +1,8 @@
+// sass/components/_buttons.scss
 @use '../abstracts/variables' as v;
 
-// Botón principal (Contact Me)
+// --- BOTÓN PRINCIPAL (CONTACT ME) ---
+// Estilo solo texto con subrayado verde inferior.
 .btn-primary {
     display: inline-block;
     font-family: v.$font-primary;
@@ -11,27 +13,27 @@
     color: v.$color-white;
     background: transparent;
     border: none;
-    border-bottom: 2px solid v.$color-green; // Línea base
-    padding-bottom: 10px;
+    border-bottom: 2px solid v.$color-green; // La línea verde clave
+    padding-bottom: 10px; // Espacio entre texto y línea
     cursor: pointer;
     transition: color 0.3s ease;
 
+    // Hover: El texto se vuelve verde
     &:hover {
         color: v.$color-green;
     }
 }
 
-// Botón de texto (View Project / View Code)
+// --- BOTÓN SECUNDARIO (VIEW PROJECT / VIEW CODE) ---
+// Hereda del botón primario pero puede tener comportamientos hover distintos.
 .btn-text {
-    @extend .btn-primary; // Hereda todo lo de arriba
+    @extend .btn-primary; // Copia los estilos de .btn-primary
     
-    // Forzamos explícitamente el borde por si algo lo sobrescribe
+    // Aseguramos el borde explícitamente
     border-bottom: 2px solid v.$color-green; 
     padding-bottom: 10px;
     
     &:hover {
-        color: v.$color-white; // El texto se pone blanco al pasar el mouse (opcional, según diseño)
-        // O si prefieres que siga verde:
-        // color: v.$color-green; 
+        color: v.$color-white; // Mantiene el blanco o cambia según preferencia
     }
 }

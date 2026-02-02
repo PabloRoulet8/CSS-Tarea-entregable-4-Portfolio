@@ -1,13 +1,16 @@
+// sass/layout/_footer.scss
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
 .footer {
     background-color: v.$color-dark-grey;
     padding-top: 60px;
-    margin-top: 80px;
+    margin-top: 80px; // Separación con la sección anterior
     
-    
-    // Configuración Full Width (Fondo infinito)
+    // --- TRUCO: FONDO INFINITO (FULL WIDTH) ---
+    // Aunque el footer esté dentro de un contenedor limitado,
+    // esto fuerza a que el fondo gris ocupe todo el ancho de la pantalla (100vw)
+    // manteniendo el contenido centrado.
     width: 100vw; 
     position: relative;
     left: 50%;
@@ -15,90 +18,96 @@
     margin-left: -50vw;
     margin-right: -50vw;
     
-    // --- CORRECCIÓN 1: SIN TIJERAS ---
-    // Quitamos overflow: hidden para que los anillos NO se corten
-    // z-index: 1 para que el fondo gris tape lo que haya detrás si es necesario
+    // --- CORRECCIÓN DE CAPAS (Z-INDEX) ---
+    // 1. Quitamos 'overflow: hidden' para que los anillos decorativos
+    //    puedan "salirse" del footer si es necesario.
+    // 2. Usamos z-index: 1 para crear un contexto de apilamiento nuevo.
     z-index: 1;
 
-    // --- ANILLOS DEL FOOTER ---
+    // --- DECORACIÓN: ANILLOS (RINGS) ---
     &::before {
         content: '';
         position: absolute;
         width: 530px;
         height: 129px;
         
-        background-image: url('../img/pattern-rings.svg'); // ORIGINAL (Móvil/Tablet)
+        // Imagen Original (Móvil/Tablet)
+        background-image: url('../img/pattern-rings.svg'); 
         
         background-repeat: no-repeat;
         pointer-events: none; 
-        z-index: 0; // Detrás del contenido
+        z-index: 0; // Se queda detrás del texto y el formulario
         
-        // Posición MÓVIL
+        // POSICIÓN MÓVIL (Valores ajustados)
         bottom: 250px; 
         left: -100px; 
 
+        // AJUSTE TABLET
         @include m.respond-to('tablet') {
-            // TUS VALORES DE TABLET
             bottom: 150px; 
             left: -60px; 
         }
 
+        // AJUSTE DESKTOP
         @include m.respond-to('desktop') {
-             // CAMBIO DE IMAGEN SOLO EN DESKTOP
-             background-image: url('../img/pattern-rings3.svg'); // NUEVA
+             // Cambio de imagen a la versión grande en Desktop
+             background-image: url('../img/pattern-rings3.svg'); 
              
-             // TUS VALORES DE DESKTOP
              bottom: 150px;
              left: -130px;
         }
     }
 
+    // --- LAYOUT DEL CONTENIDO (Texto + Formulario) ---
     &__layout {
         position: relative;
-        z-index: 2; // El contenido (texto/form) va encima de los anillos
+        z-index: 2; // Asegura que el contenido esté sobre los anillos
         display: flex;
-        flex-direction: column; 
+        flex-direction: column; // Móvil: Uno debajo del otro
         align-items: center;
         text-align: center;
         margin-bottom: 0px; 
 
+        // AJUSTE TABLET
         @include m.respond-to('tablet') {
             flex-direction: column; 
             align-items: center;
             text-align: center;
-            max-width: 445px; 
+            max-width: 445px; // Limita el ancho para que no se vea gigante
             margin-left: auto;
             margin-right: auto;
         }
 
+        // AJUSTE DESKTOP
         @include m.respond-to('desktop') {
-            flex-direction: row; 
+            flex-direction: row; // Cambia a horizontal (Texto izq - Form der)
             justify-content: space-between;
             align-items: flex-start;
             text-align: left;
             
-            // --- CORRECCIÓN 2: ALINEACIÓN ---
-            // Antes tenías 100%, lo que rompía la grilla de 1110px.
-            // Ahora forzamos el ancho del contenedor global.
+            // --- ALINEACIÓN CON LA GRILLA CENTRAL ---
+            // Como el footer tiene ancho infinito (100vw), aquí forzamos
+            // al contenido a respetar el ancho máximo estándar del sitio (1110px).
             max-width: 1110px; 
-            width: 100%; // Ocupar todo el espacio disponible hasta 1110px
+            width: 100%; 
             margin-left: auto;
             margin-right: auto;
         }
     }
 
+    // --- BLOQUE DE TEXTO (Título y descripción) ---
     &__text {
         max-width: 445px;
         margin-bottom: 50px; 
         width: 100%;
 
         @include m.respond-to('desktop') {
-            margin-bottom: 0; 
+            margin-bottom: 0; // En desktop no necesita margen inferior
         }
 
-        // --- TIPOGRAFÍA CORREGIDA ---
+        // TIPOGRAFÍA RESPONSIVE
         .section-title {
-            font-size: 40px; // Móvil default
+            font-size: 40px; // Móvil
             font-weight: 700;
             margin-bottom: 20px;
 
@@ -111,12 +120,12 @@
         }
 
         p {
-            font-size: 16px; // Móvil default
+            font-size: 16px; 
             line-height: 26px;
             color: v.$color-light-grey;
 
             @include m.respond-to('tablet') {
-                font-size: 18px; // Tablet y Desktop
+                font-size: 18px; // Aumenta ligeramente en pantallas grandes
             }
         }
     }

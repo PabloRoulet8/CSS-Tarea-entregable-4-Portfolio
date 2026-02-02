@@ -1,3 +1,4 @@
+// sass/components/_skills.scss
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
@@ -5,11 +6,10 @@
     padding-top: 40px;
     padding-bottom: 40px;
     position: relative;
-    border-top: 1px solid v.$color-light-grey;
-    // z-index: 1 para estar sobre el fondo, pero los anillos irán en -1 o 0
+    border-top: 1px solid v.$color-light-grey; // Línea separadora superior (Móvil)
     z-index: 1; 
 
-    // --- CORRECCIÓN: ANILLOS COMO ELEMENTO FLOTANTE (NO background-image) ---
+    // --- DECORACIÓN: ANILLOS INFERIORES ---
     &::before {
         content: '';
         position: absolute;
@@ -17,38 +17,32 @@
         height: 129px;
         background-repeat: no-repeat;
         pointer-events: none;
-        
-        // Z-Index bajo para quedar detrás del texto
         z-index: -1; 
         
-        // Imagen Original (Móvil/Tablet)
+        // Imagen (Móvil/Tablet)
         background-image: url('../img/pattern-rings2.svg');
 
-        // POSICIÓN MÓVIL
+        // Posición Móvil
         right: -350px;
         bottom: -65px;
 
         @include m.respond-to('tablet') {
-            // POSICIÓN TABLET
             right: -345px; 
             bottom: -30px;
         }
 
         @include m.respond-to('desktop') {
-            // CAMBIO DE IMAGEN SOLO EN DESKTOP
             background-image: url('../img/pattern-rings4.svg');
-            
-            // POSICIÓN DESKTOP
-            // Ajusta 'left' y 'bottom' según tu diseño
+            // En desktop se mueven a la izquierda
             bottom: -30px;
-            right: -400px; // Reseteamos right porque ahora usamos left
+            right: -400px; 
         }
     }
 
-    // --- (El resto sigue igual) ---
+    // Ajustes de espaciado para Tablet/Desktop
     @include m.respond-to('tablet') {
         margin-bottom: 100px;
-        border-top: none;
+        border-top: none; // Quita la línea separadora en pantallas grandes
     }
 
     @include m.respond-to('desktop') {
@@ -56,28 +50,32 @@
         padding-top: 72px; 
     }
 
+    // --- GRILLA DE HABILIDADES ---
     &__list {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; // Móvil: 1 columna (lista vertical)
         gap: 24px;
         text-align: center;
         list-style: none;
         padding: 0;
         margin: 0; 
 
+        // Tablet: 2 columnas
         @include m.respond-to('tablet') {
             grid-template-columns: repeat(2, 1fr);
-            text-align: left;
+            text-align: left; // Alineación izquierda
             gap: 52px 24px;
             padding-top: 20px;
         }
 
+        // Desktop: 3 columnas
         @include m.respond-to('desktop') {
             grid-template-columns: repeat(3, 1fr);
             gap: 58px 30px;
         }
     }
 
+    // NOMBRE DE LA HABILIDAD (Ej: HTML, CSS)
     &__title {
         font-size: 32px;
         font-weight: 700;
@@ -85,6 +83,7 @@
         @include m.respond-to('desktop') { font-size: 48px; }
     }
 
+    // EXPERIENCIA (Ej: 4 Years Experience)
     &__experience {
         font-size: 16px;
         color: v.$color-light-grey;
@@ -93,6 +92,7 @@
     }
 }
 
+// Separador visual extra (HR) que solo se ve en móvil
 .skills + .separator {
     @include m.respond-to('tablet') { display: none; }
 }

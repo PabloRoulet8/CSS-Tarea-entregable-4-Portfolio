@@ -1,8 +1,9 @@
+// sass/base/_base.scss
 @use '../abstracts/variables' as v;
 
-// Solo estilos base del body y enlaces (sin importar otros archivos)
+// --- CONFIGURACIÓN GLOBAL ---
 html, body {
-    overflow-x: hidden; // Corta cualquier cosa que se salga por los lados
+    overflow-x: hidden; // CRUCIAL: Evita que aparezca barra de scroll horizontal si algún elemento (como los anillos decorativos) se sale de la pantalla.
     width: 100%;
     position: relative;
 }
@@ -12,26 +13,25 @@ body {
     color: v.$color-white;
     font-family: v.$font-primary;
     font-size: v.$font-size-body;
-    line-height: 1.5;
-    overflow-x: hidden; // Prevenir scroll horizontal no deseado
+    line-height: 1.5; // Altura de línea estándar para legibilidad
 }
 
-// Estilos base para enlaces
+// --- ENLACES (LINKS) ---
 a {
-    text-decoration: none;
-    color: inherit;
-    transition: color 0.3s ease;
+    text-decoration: none; // Quita el subrayado por defecto
+    color: inherit;        // Hereda el color del padre
+    transition: color 0.3s ease; // Suaviza el cambio de color
     cursor: pointer;
 
+    // Efecto Hover global
     &:hover {
-        color: v.$color-green;
+        color: v.$color-green; 
     }
 }
 
-// Reseteo básico para imágenes
+// --- IMÁGENES ---
 img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+    max-width: 100%; // Hace que las imágenes sean flexibles y nunca desborden su contenedor
+    height: auto;    // Mantiene la proporción original
+    display: block;  // Elimina espacios extraños debajo de las imágenes
 }
-

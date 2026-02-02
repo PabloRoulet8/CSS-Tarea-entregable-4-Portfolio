@@ -1,48 +1,48 @@
+// sass/components/_form.scss
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
 .contact-form {
     margin-top: 50px;
     width: 100%;
-    max-width: 445px;
+    max-width: 445px; // Ancho máximo limitado para que no se estire demasiado
     margin-bottom: 87px;
     position: relative; 
 
-    // --- ¡LIMPIEZA! ---
-    // Hemos borrado el &::before de aquí porque los anillos
-    // ahora los controlaremos desde el footer (su lugar correcto).
-
-    // --- RESTO DEL FORMULARIO ---
+    // Reset de box-sizing para evitar problemas de padding
     *, *::before, *::after {
         box-sizing: border-box;
     }
 
     .form-group {
         position: relative;
-        margin-bottom: 32px;
+        margin-bottom: 32px; // Separación entre campos
         width: 100%; 
     }
 
+    // --- ESTILOS DE INPUTS Y TEXTAREA ---
     input,
     textarea {
         width: 100%; 
         display: block;
-        background: transparent;
+        background: transparent; // Sin fondo
         border: none;
-        border-bottom: 1px solid v.$color-white;
-        padding: 0 0 16px 24px; 
+        border-bottom: 1px solid v.$color-white; // Solo línea inferior blanca
+        padding: 0 0 16px 24px; // Padding izquierdo para el texto
         font-family: v.$font-primary;
         font-weight: 500;
         font-size: 16px;
         color: v.$color-white;
         outline: none;
-        border-radius: 0;
+        border-radius: 0; // Evita bordes redondeados en iOS
 
+        // Estado Focus (Al escribir)
         &:focus {
-            border-bottom-color: v.$color-green;
+            border-bottom-color: v.$color-green; // La línea se vuelve verde
         }
     }
 
+    // Alineación del botón de envío a la derecha
     .form-actions {
         display: flex;
         justify-content: flex-end; 

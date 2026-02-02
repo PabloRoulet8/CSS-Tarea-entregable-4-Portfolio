@@ -1,7 +1,9 @@
+// sass/layout/_hero.scss
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
-// AJUSTE GLOBAL PARA EL ANCHO DESKTOP
+// AJUSTE ESPECIAL PARA EL CONTAINER EN EL HERO (DESKTOP)
+// Elimina padding lateral para permitir que los elementos toquen los bordes si es necesario.
 .container {
     @include m.respond-to('desktop') {
         max-width: 1110px;
@@ -14,45 +16,47 @@
 
 .hero {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; // Móvil: Imagen y texto apilados
     align-items: center;
     text-align: center;
     position: relative;
     padding-bottom: 80px;
 
-    // --- ELEMENTO FLOTANTE: ANILLOS ---
+    // --- ELEMENTO DECORATIVO: ANILLOS (RINGS) ---
+    // Se posiciona de forma absoluta detrás del contenido.
     &::before {
         content: '';
         position: absolute;
         width: 530px;
         height: 129px;
         background-repeat: no-repeat;
-        pointer-events: none; 
+        pointer-events: none; // Permite hacer click a través de la decoración
         z-index: 0; 
         
-        // Imagen Original (Móvil/Tablet)
+        // Imagen para Móvil/Tablet
         background-image: url('../img/pattern-rings.svg');
 
-        // POSICIÓN MÓVIL
+        // Coordenadas para Móvil (Parcialmente fuera de pantalla a la izquierda)
         left: -140px; 
         top: 30px; 
 
+        // Ajuste para Tablet
         @include m.respond-to('tablet') {
             left: 0px; 
             top: -10px;
         }
 
+        // Ajuste para Desktop (Cambia imagen y posición)
         @include m.respond-to('desktop') {
-            // CAMBIO DE IMAGEN SOLO EN DESKTOP
             background-image: url('../img/pattern-rings3.svg');
-            
             left: -180px; 
             top: 0px;
         }
     }
 
+    // --- LAYOUT TABLET/DESKTOP ---
     @include m.respond-to('tablet') {
-        flex-direction: row; 
+        flex-direction: row; // Pone texto e imagen lado a lado
         align-items: center; 
         justify-content: space-between;
         text-align: left;
@@ -61,22 +65,20 @@
     
     @include m.respond-to('desktop') {
         align-items: flex-start; 
-        // Quitamos padding top para facilitar que la imagen suba
         padding-top: 0; 
         min-height: auto;
-        // Ajuste de margen top global si hace falta
         margin-top: 50px; 
     }
 
-    // --- CONTENEDOR DE IMAGEN Y CÍRCULO ---
+    // --- CONTENEDOR DE LA FOTO DE PERFIL ---
     &__image-container {
         width: 100%;
-        max-width: 174px; 
+        max-width: 174px; // Tamaño en móvil
         margin-bottom: 40px;
         position: relative; 
         z-index: 1; 
 
-        // CAPA 0 (Fondo Gris)
+        // FONDO GRIS DETRÁS DE LA FOTO
         &::after {
             content: '';
             position: absolute;
@@ -85,16 +87,17 @@
             z-index: 0; 
         }
 
-        // CAPA 2 (Frente): CÍRCULO
+        // ELEMENTO DECORATIVO: CÍRCULO (CIRCLE)
         &::before {
             content: '';
             position: absolute;
             width: 129px;
             height: 129px;
             background-repeat: no-repeat;
-            z-index: 2; 
+            z-index: 2; // Por encima de la foto
             background-image: url('../img/pattern-circle.svg'); 
 
+            // Posición Móvil (Abajo derecha sobre la foto)
             bottom: -20px; 
             right: -165px; 
 
@@ -106,11 +109,11 @@
             @include m.respond-to('desktop') {
                 background-image: url('../img/pattern-circle2.svg'); 
                 bottom: 70px; 
-                left: -65px;
+                left: -65px; // En desktop se mueve a la izquierda
             }
         }
 
-        // CAPA 1 (Medio): La Foto
+        // La Imagen Real
         img {
             position: relative;
             z-index: 1; 
@@ -119,49 +122,51 @@
             display: block;
         }
 
+        // Posicionamiento en Tablet (Se sale del flujo para pegarse a la derecha)
         @include m.respond-to('tablet') {
-            order: 2; 
+            order: 2; // Manda la imagen a la derecha (Flexbox)
             max-width: 400px; 
             margin-bottom: 0;
-            margin-top: -110px; 
+            margin-top: -110px; // Sube la imagen para superponerse
             flex-shrink: 0; 
-            margin-right: -30px; 
+            margin-right: -30px; // Se pega al borde derecho
             margin-left: -90px; 
         }
         
+        // Posicionamiento en Desktop (Efecto "tocar el techo")
         @include m.respond-to('desktop') {
             max-width: 445px;
             margin-right: 0;
             margin-left: 0;
             
-            // --- ¡AQUÍ ESTÁ LA CLAVE PARA QUE TOQUE EL TECHO! ---
-            // Usamos un margen negativo grande para subir la imagen 
-            // más allá del contenedor del Hero, superponiéndose al Header.
-            // Ajusta este número (-140px, -150px) hasta que toque el borde exacto.
+            // MARGEN NEGATIVO CRÍTICO:
+            // Sube la imagen -190px para que invada el área del header
+            // creando el efecto de diseño superpuesto.
             margin-top: -190px; 
         }
     }
 
-    // --- CONTENEDOR DE TEXTO ---
+    // --- CONTENEDOR DE TEXTOS (Título y descripción) ---
     &__content {
         z-index: 2;
+        
         @include m.respond-to('tablet') {
-            order: 1; 
+            order: 1; // Manda el texto a la izquierda
             flex-grow: 1; 
             min-width: 460px; 
-            max-width: 100%; 
             padding-top: 0; 
             position: relative; 
             z-index: 10;
         }
         @include m.respond-to('desktop') {
             max-width: 706px;
-            margin-top: 80px; // Ajustado para centrar con respecto a la nueva altura de imagen
+            margin-top: 80px; // Ajuste vertical para centrar con la imagen desplazada
             order: 1;
             min-width: auto;
         }
     }
 
+    // TÍTULO PRINCIPAL (H1)
     &__title {
         font-size: 40px;
         line-height: 1;
@@ -169,6 +174,7 @@
         margin-bottom: 24px;
         font-weight: 700;
 
+        // Control de saltos de línea (<br>) según dispositivo
         .br-tablet { display: none; }        
         .br-mobile-desktop { display: inline; } 
 
@@ -192,28 +198,31 @@
             .br-mobile-desktop { display: inline; }
         }
 
+        // Subrayado verde en el nombre
         .text-underline {
             position: relative;
-            white-space: nowrap;
+            white-space: nowrap; // Evita que el nombre se parta
+            
             &::after {
                 content: '';
                 position: absolute;
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                height: 4px;
+                height: 4px; // Grosor de la línea
                 background-color: v.$color-green;
-                z-index: -1;
+                z-index: -1; // Detrás del texto
             }
         }
     }
 
+    // DESCRIPCIÓN
     &__description {
         font-size: 16px;
         line-height: 26px;
         color: v.$color-light-grey;
         margin-bottom: 24px;
-        max-width: 445px;
+        max-width: 445px; // Limita el ancho para lectura cómoda
 
         @include m.respond-to('tablet') {
             font-size: 18px;

@@ -1,19 +1,26 @@
-@use 'sass:map'; // Importante: importar el módulo de mapas de SASS
+// sass/abstracts/_mixins.scss
+@use 'sass:map'; // Módulo necesario para trabajar con mapas en SASS
 
+// --- MAPA DE PUNTOS DE RUPTURA (BREAKPOINTS) ---
+// Define el ancho mínimo de pantalla para cada dispositivo.
 $breakpoints: (
-    'tablet': 768px,
-    'desktop': 1024px,
-    'large': 1440px
+    'tablet': 768px,   // Tablets y móviles grandes
+    'desktop': 1024px, // Laptops y monitores
+    'large': 1440px    // Pantallas muy anchas
 );
 
+// --- MIXIN RESPONSIVE ---
+// Uso: @include respond-to('tablet') { ...estilos... }
+// Genera automáticamente la media query correspondiente.
 @mixin respond-to($breakpoint) {
-    // Usamos map.has-key en lugar de map-has-key
+    // Verifica si el nombre (ej: 'tablet') existe en el mapa $breakpoints
     @if map.has-key($breakpoints, $breakpoint) {
-        // Usamos map.get en lugar de map-get
+        // Genera el bloque @media con el valor de píxeles correcto
         @media (min-width: map.get($breakpoints, $breakpoint)) {
-            @content;
+            @content; // Inserta aquí los estilos que escribas dentro del mixin
         }
     } @else {
+        // Si escribes mal el nombre, te avisa en la consola
         @warn "Desconocido breakpoint: #{$breakpoint}.";
     }
 }

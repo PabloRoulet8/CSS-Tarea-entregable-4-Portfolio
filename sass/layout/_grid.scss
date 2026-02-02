@@ -1,23 +1,27 @@
+// sass/layout/_grid.scss
 @use '../abstracts/mixins' as m;
 
+// --- CONTENEDOR PRINCIPAL (.container) ---
+// Centra el contenido y maneja los márgenes laterales en todos los dispositivos.
 .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     
-    // MÓVIL (Original)
+    // MÓVIL: Padding base para que el texto no toque los bordes del celular
     padding-left: 16px;
     padding-right: 16px;
     max-width: 100%;
 
-    // TABLET (Tu pedido: 30px de padding)
+    // TABLET: Aumentamos el espacio lateral (Tu ajuste solicitado)
     @include m.respond-to('tablet') {
         padding-left: 30px;
         padding-right: 30px;
         max-width: 768px; 
     }
 
-    // DESKTOP (Ancho fijo 1110px = 165px a cada lado en pantallas de 1440px)
+    // DESKTOP: Ancho fijo para mantener el diseño centrado en pantallas grandes.
+    // 1110px es el estándar de este diseño.
     @include m.respond-to('desktop') {
         max-width: 1110px; 
         padding-left: 0;
